@@ -1,4 +1,4 @@
-;Init Utility Subroutines
+     ;Init Utility Subroutines
 OUTSTRG EQU $FFC7 ; string output Utility Subroutine
 OUTA    EQU $FFB8 ; char output Utility Subroutine
 OUTCRL  EQU $FFC4 ; output carriage return
@@ -33,7 +33,7 @@ HCCW FCB $20,$60,$40,$50,$10,$90,$80,$A0 ; Half Step Counter Clockwise Sequence
 
 ; Main Program Entry
         ORG $D000
-;        LDS #$D800 ; Init SP
+        LDS #$D800 ; Init SP
 
 ; Init Interrupt Timer
 OC1INIT:
@@ -48,7 +48,7 @@ OC1INIT:
 INIT:
         LDD #FCW ; Load the address of FCW
         STD STEPPTR ; Store addr to STEPPTR
-        LDD #$5168; Set PWIDTH for testing (RPM 30)
+        LDD #$5168 ; Set PWIDTH for testing (RPM 30)
         STD PWIDTH
         LDAA #FULLSTEP ; Set Sequence Size to 4 Bytes
         STAA SEQSIZE
@@ -68,10 +68,10 @@ SETOC1:
         LDX STEPPTR
         LDD #FCW ; Check if sequence has finished
         ADDD SEQSIZE
-        CMPD STEPPTR
-        BNE SETOCD1 ; if((*FCW + sizeof(FCW)) > STEPPTR)
+        CPD STEPPTR
+        BNE SETOC1D ; if((*FCW + sizeof(FCW)) > STEPPTR)
         LDX FCW ; else, reset X to FCW
-SETOCD1:
+SETOC1D:
         LDAA 0,X ; Update OC1D to next Step Sequence
         STAA OC1D
         INX ; Increment Pointer
