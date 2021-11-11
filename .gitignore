@@ -1,0 +1,7 @@
+# Simulator Files
+*.s19
+*.S19
+*.lst
+*.LST
+# Except for Buffalo
+!BUF34.S19
